@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TimeOfDayPicker from './timeOfDayPicker';
 import DatePicker from 'material-ui/DatePicker';
 import Checkbox from 'material-ui/Checkbox';
+import Stations from './stations'
 
 const styles = {
   block: {
@@ -55,6 +56,8 @@ class SearchPage extends Component{
                 <div style = {styles.block}>
                     <Checkbox label="Round Trip?" onCheck = {this.handleRoundTripCheck} />
                 </div>
+                <p> Pick origing </p>
+                    <Stations />
             </div>
         );
     }
