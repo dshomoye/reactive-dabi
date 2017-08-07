@@ -15,10 +15,14 @@ class Stations extends Component{
     //TODO app CORS to flask to allow this (dev only??)
       componentDidMount() {
         axios.get(`http://dabi.dshomoye.me/stations`)
-            .then(res => {
-                const posts = res.data.data.children.map(obj => obj.data);
+            .then((res) => {
+                //TODO parse this json and send to menuitems
+                const posts = res.data;
                 console.log(posts);
-        });
+        }).catch(e => {
+            console.log(e);
+        })
+            ;
       }
     
     render() {
