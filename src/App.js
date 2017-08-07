@@ -2,16 +2,56 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from './components/header';
 import SearchPage from './components/search'
+import {
+  Step,
+  Stepper,
+  StepLabel,
+} from 'material-ui/Stepper';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import './App.css';
 
 class App extends Component {
 
   constructor(props){
     super(props);
+    this.pages = ["Search","Result","Review","Confirmation"];
     this.state = {
       logged:true,
-      page:"search"
+      page:this.pages[0],
+      nextReady : false,
+      searchFilled : false,
+      pageIndex : 0,
+      end : false,
     };
+  }
+
+  handleNext = () => {
+    const i = this.state.pageIndex;
+    this.setState({
+      pageIndex : i+1,
+      end : i >= 4,
+      page : this.pages[i], 
+    });
+    if(!this.state.searchFilled){ 
+      this.setState({
+        nextReady:false,
+      });
+    }
+  }
+
+  handlePrev = () => {
+    const i = this.state.pageIndex;
+    this.setState({
+      pageIndex : i-1,
+      end : false,
+      page : this.pages[i], 
+    });
+    if(!this.state.searchFilled){ 
+      this.setState({
+        nextReady:false,
+      });
+  }
   }
 
   handleSignOut = () => {
@@ -22,28 +62,27 @@ class App extends Component {
 
   handleSearch = (params) => {
     console.log(params)
-    //pass params to results page
+    this.setState({
+      nextReady:true,
+      searchFilled: true
+    });
+  }
+
+  getPageContent(pageIndex) {
+    switch(pageIndex){
+      case 0: 
+        return <SearchPage onSearch={this.handleSearch}/>
+      default:
+          return <SearchPage onSearch={this.handleSearch}/>
+      }
   }
 
   render() {
-    console.log("Sign out in App " + this.state.logged)
-
-    let page = this.state.page;
-
-    switch (page) {
-      case "search":
-        page = <SearchPage onSearch={this.handleSearch}/>
-        break;
-    
-      default:
-        break;
-    }
-
     return (
       <MuiThemeProvider>
       <div className="App">
           <Header logged={this.state.logged} signOut = {this.handleSignOut} />
-          {page}
+          {this.getPageContent(this.state.pageIndex)}
       </div>
       </MuiThemeProvider>
     );
