@@ -95,6 +95,9 @@ class SearchPage extends Component{
         console.log("round trip set to " + this.state.roundTrip);
         console.log("origin station changed to " + this.state.originStation);
         //TODO checkbox needs to be centered!
+        //TODO change the handle search. 
+        //Pass the parameters to parent if both stations picked.
+        //in App js, render the Next button (in stepper) if search parameters have been passed
 
         if(this.state.roundTrip){
             var returnDetails = 
