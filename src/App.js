@@ -20,6 +20,11 @@ class App extends Component {
     );
   }
 
+  handleSearch = (params) => {
+    console.log(params)
+    //pass params to results page
+  }
+
   render() {
     console.log("Sign out in App " + this.state.logged)
 
@@ -27,7 +32,7 @@ class App extends Component {
 
     switch (page) {
       case "search":
-        page = <SearchPage />
+        page = <SearchPage onSearch={this.handleSearch}/>
         break;
     
       default:
