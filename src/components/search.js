@@ -34,7 +34,7 @@ class SearchPage extends Component{
         roundTrip : false,
         originStation : null,
         destinationStation : null,
-        returnTime : 1,
+        returnTime : "Anytime",
         returnDate : defaultDate.toISOString().slice(0,10),
         }
     }
