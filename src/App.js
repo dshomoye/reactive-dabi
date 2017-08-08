@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from './components/header';
 import SearchPage from './components/search'
+import ResultPage from './components/results'
+
+
 import {
   Step,
   Stepper,
@@ -20,9 +23,10 @@ class App extends Component {
       logged:true,
       page:this.pages[0],
       nextReady : false,
-      searchFilled : false,
+      filledPages : [false,false,false,false],
       pageIndex : 0,
       end : false,
+      searchParams : null,
     };
   }
 
@@ -33,11 +37,6 @@ class App extends Component {
       end : i >= 4,
       page : this.pages[i], 
     });
-    if(!this.state.searchFilled){ 
-      this.setState({
-        nextReady:false,
-      });
-    }
   }
 
   handlePrev = () => {
@@ -47,11 +46,6 @@ class App extends Component {
       end : false,
       page : this.pages[i], 
     });
-    if(!this.state.searchFilled){ 
-      this.setState({
-        nextReady:false,
-      });
-  }
   }
 
   handleSignOut = () => {
@@ -61,28 +55,75 @@ class App extends Component {
   }
 
   handleSearch = (params) => {
-    console.log(params)
+    let i = this.state.filledPages;
+    if(!params){   
+      i[0] = false   
+      this.setState({filledPage:i});
+      return;
+    }
+    else {
+      i[0] = true;
     this.setState({
       nextReady:true,
-      searchFilled: true
+      searchFilled: true,
+      filledPages : i,
+      searchParams : params
     });
+    }
   }
 
   getPageContent(pageIndex) {
     switch(pageIndex){
       case 0: 
         return <SearchPage onSearch={this.handleSearch}/>
+      case 1:
+       return <ResultPage params={this.state.searchParams} />
       default:
           return <SearchPage onSearch={this.handleSearch}/>
       }
   }
 
   render() {
+    const index = this.state.pageIndex;
+    const contentStyle = {margin: '0 16px'};
+
     return (
       <MuiThemeProvider>
       <div className="App">
           <Header logged={this.state.logged} signOut = {this.handleSignOut} />
-          {this.getPageContent(this.state.pageIndex)}
+          <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+              <Stepper activeStep={index}>
+                  <Step>
+                    <StepLabel>{this.pages[0]}</StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>{this.pages[1]}</StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>{this.pages[2]}</StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>{this.pages[3]}</StepLabel>
+                  </Step>
+            </Stepper>
+            <div style={contentStyle}>
+              {this.getPageContent(this.state.pageIndex)}
+              <div style={{marginTop: 12}}>
+                <FlatButton
+                  label="Back"
+                  disabled={index === 0}
+                  onTouchTap={this.handlePrev}
+                  style={{marginRight: 12}}
+                />
+                <RaisedButton
+                  label={index === 3 ? 'Finish' : 'Next'}
+                  primary={true}
+                  onTouchTap={this.handleNext}
+                  disabled={!this.state.filledPages[index]}
+                />
+              </div>
+            </div>
+          </div>
       </div>
       </MuiThemeProvider>
     );

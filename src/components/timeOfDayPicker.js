@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 
 class TimeOfDayPicker extends Component{
     state = {
-        value : 1,
+        value : "Anytime",
     };
 
     handleChange = (event, index, value) => {
@@ -21,10 +21,10 @@ class TimeOfDayPicker extends Component{
           value={this.state.value}
           onChange={this.handleChange}
         >
-          <MenuItem value={1}  key={1} primaryText="Anytime" />
-          <MenuItem value={2} key={2} primaryText=" Morning" />
-          <MenuItem value={3}  key={3} primaryText="Afternoon" />
-          <MenuItem value={4} key={4} primaryText="Evening" />
+          <MenuItem value="Anytime"  key={1} primaryText="Anytime" />
+          <MenuItem value="Morning" key={2} primaryText=" Morning" />
+          <MenuItem value="Afternoon"  key={3} primaryText="Afternoon" />
+          <MenuItem value="Evening" key={4} primaryText="Evening" />
             </SelectField>
         );
     }

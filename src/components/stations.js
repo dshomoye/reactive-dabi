@@ -31,17 +31,14 @@ class Stations extends Component{
     });
 
     }
-
-    handleChange = (event, index, value) => {
-        this.setState({value:value});
-        this.props.onChange(value);        
-      }
-
       
     handleUpdate = (station,index) => {
         if(this.state.stations.includes(station)){
             this.setState({value:station});
-            this.props.onChange(station);
+            this.props.onChange(this.state.stationCodes[index]);
+        }
+        else {
+            this.props.onChange(false);
         }
     }
 
@@ -53,6 +50,10 @@ class Stations extends Component{
                 dataSource={this.state.stations}
                 onNewRequest = {this.handleUpdate}
                 filter={AutoComplete.fuzzyFilter}
+                errorText = {
+                    !this.state.stations.includes(this.state.value)
+                    && "Select Valid Station"
+                }
                  />
         );
     }
