@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SearchPage from './search'
 import ResultPage from './results'
+import ReviewPage from './review'
 import {
   Step,
   Stepper,
@@ -15,14 +16,15 @@ class Book extends Component {
         this.pages = ["Search","Result","Review","Confirmation"];
         this.state = {
         page:this.pages[0],
-        nextReady : false,
         filledPages : [false,false,false,false],
         pageIndex : 0,
         end : false,
         searchParams : null,
+        tripInfo : null,
+        returnInfo : null
         };
   }
-     handleNext = () => {
+  handleNext = () => {
     const i = this.state.pageIndex;
     this.setState({
       pageIndex : i+1,
@@ -48,9 +50,8 @@ class Book extends Component {
       return;
     }
     else {
-      i[0] = true;
+    i[0] = true;
     this.setState({
-      nextReady:true,
       searchFilled: true,
       filledPages : i,
       searchParams : params
@@ -58,12 +59,36 @@ class Book extends Component {
     }
   }
 
+  handleResult = (trip, returnInfo) => {
+    console.log("onclick handled")
+    let i = this.state.filledPages;
+    if(!trip){
+      i[1] = false
+      this.setState({
+        filledPages:i
+      })
+    }
+    else{
+    i[1] = true
+    this.setState({
+      tripInfo : trip,
+      returnInfo : returnInfo,
+      filledPages : i
+    })
+    console.log(trip)
+    console.log(this.state.tripInfo)
+    }
+
+  }
+
   getPageContent(pageIndex) {
     switch(pageIndex){
       case 0: 
         return <SearchPage onSearch={this.handleSearch}/>
       case 1:
-       return <ResultPage params={this.state.searchParams} />
+       return <ResultPage params={this.state.searchParams} onClick={this.handleResult}/>
+      case 2:
+        return <ReviewPage tripInfo={this.state.tripInfo} returnInfo={this.state.returnInfo}/>;
       default:
           return <SearchPage onSearch={this.handleSearch}/>
       }

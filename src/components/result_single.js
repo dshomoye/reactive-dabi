@@ -7,12 +7,13 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import Paper from 'material-ui/Paper';
 
 class Result extends Component {
 
     getItems(){
                 const sItems = this.props.scheduleItems.map((item)=>
-                <TableRow key={item.train_num}>
+                <TableRow key={item.train_num} selected={item.selected}>
                 <TableRowColumn>{item.train_num}</TableRowColumn>
                 <TableRowColumn>{item.time_out}</TableRowColumn>
                 <TableRowColumn>{item.arrival}</TableRowColumn>
@@ -25,7 +26,8 @@ class Result extends Component {
     render() {
         return (
             <div>
-                  <Table>
+                <Paper>
+                  <Table selectable={true} onRowSelection={this.props.onClick}>
                     <TableHeader>
                     <TableRow>
                         <TableHeaderColumn>Train Number</TableHeaderColumn>
@@ -38,6 +40,7 @@ class Result extends Component {
                     {this.getItems()}
                     </TableBody>
                 </Table>
+                </Paper>
                 </div>
 );
     }

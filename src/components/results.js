@@ -8,7 +8,9 @@ class ResultPage extends Component {
         super(props);
         this.state={
             scheduleItems:[],
-            returnScheduleItems : []
+            returnScheduleItems : [],
+            tripInfo: null,
+            returnInfo: null,
         }
     }
 
@@ -70,13 +72,46 @@ class ResultPage extends Component {
         }
     }
 
+    handleClick = (index)=> {
+        let i = this.state.scheduleItems
+        i.map((item)=> item.selected = false)
+        if(index.length===0){
+            this.props.onClick(false,false)
+            return
+        }
+        i[index].selected = true;
+        this.setState({
+            tripInfo : this.state.scheduleItems[index],
+            scheduleItems : i
+        });
+        if((this.props.roundTrip && this.state.returnInfo != null) 
+            || !this.props.roundTrip){
+                let t = this.state.scheduleItems[index]
+                t.origin = this.props.params.originStation
+                t.destination = this.props.params.destinationStation
+                this.props.onClick(t,this.state.returnInfo);
+            }
+    }
+
+    handleReturnClick = (index) => {
+        this.setState({
+            returnInfo : this.state.returnScheduleItems[index]
+        });
+        if(this.state.tripInfo !== null){
+            let t = this.state.tripInfo
+            t.origin = this.props.params.originStation
+            t.destination = this.props.params.destinationStation
+            this.props.onClick(t,this.state.returnInfo);
+        }
+    }
+
     render() {
         let returnSchedule = <br/>;
 
         if(this.props.params.roundTrip){
             returnSchedule = (<div> 
                 <h6> Return Trip </h6>
-                <Result scheduleItems = {this.state.scheduleItems} /> 
+                <Result scheduleItems = {this.state.returnScheduleItems} onClick={this.handleReturnClick}/> 
                 </div>)
         }
 
@@ -84,7 +119,7 @@ class ResultPage extends Component {
             <div>
             <h6> Available trains from {this.props.params.originStation}  
             to {this.props.params.destinationStation} on {this.props.params.date}</h6>
-            <Result scheduleItems = {this.state.scheduleItems} params = {this.props.params}/>
+            <Result scheduleItems = {this.state.scheduleItems} params = {this.props.params} onClick={this.handleClick}/>
             {returnSchedule}
             </div>
 );
