@@ -89,7 +89,7 @@ class Book extends Component {
       case 2:
         return <ReviewPage tripInfo={this.state.tripInfo} returnInfo={this.state.returnInfo}/>;
       case 3:
-        return <ConfirmPage />
+        return <ConfirmPage tripInfo={this.state.tripInfo} returnInfo={this.state.returnInfo} />
         default:
           return <SearchPage onSearch={this.handleSearch}/>
       }

@@ -29,7 +29,7 @@ class ReviewPage extends Component{
                     <Divider />
                     {rtI}
                     <Divider />
-                    <p> Fee : {this.props.tripInfo.fare}</p>
+                    <p> Fee : ${this.props.tripInfo.fare}.00</p>
                     <Divider />
                 </Paper>
             </div>

@@ -3,6 +3,16 @@ import {Card, CardHeader, CardText} from 'material-ui/Card';
 
 class ConfirmPage extends Component {
     render(){
+        let ret = null
+        if(this.props.returnInfo!==null){
+            ret = 
+                <div>
+                    <p>Return Trip info</p>
+                    <p> Departure : {this.props.returnInfo.time_out} </p>
+                    <p> Arrival: {this.props.returnInfo.arrival} </p>
+                </div>
+        }
+
         return(
     <Card>
         <CardHeader
@@ -12,9 +22,13 @@ class ConfirmPage extends Component {
         showExpandableButton={true}
         />
         <CardText expandable={true}>
-            For trip from ... to .... 
-            <br/> Departing at ...
-            <br/> Arriving at ...
+            <div>
+            For trip from {this.props.tripInfo.origin}  to {this.props.tripInfo.destination} 
+            <br/> Departing at {this.props.tripInfo.time_out}
+            <br/> Arriving at {this.props.tripInfo.arrival}
+            <br/>
+            {ret}
+            </div>
         </CardText>
         </Card>
         )

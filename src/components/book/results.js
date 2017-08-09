@@ -136,8 +136,7 @@ class ResultPage extends Component {
 
         return (
             <div>
-            <h6> Available trains from {this.props.params.originStation}  
-            to {this.props.params.destinationStation} on {this.props.params.date}</h6>
+            <h6> Available trains from {this.props.params.originStation} to {this.props.params.destinationStation} on {this.props.params.date}</h6>
             <Result scheduleItems = {this.state.scheduleItems} params = {this.props.params} onClick={this.handleClick}/>
             {returnSchedule}
             </div>

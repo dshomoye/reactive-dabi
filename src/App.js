@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       logged:true,
-      //actions book (0), reservations (1)
+      //actions book (0), reservations (1), login (2) ...
       action:0,
     };
   }
