@@ -47,14 +47,14 @@ class SearchPage extends Component{
 
     handleDateChange = (e,date) => {
         this.setState(
-            {date: date.toISOString().slice(0,10) }
-        );
+            {date: date.toISOString().slice(0,10) },
+            this.handleSearch);
     }
 
     handleRoundTripCheck= (e,checked) => {
         this.setState({
             roundTrip : checked
-        })
+        },this.handleSearch)
     }
 
     handleOriginChange = (stationCode) => {
@@ -64,8 +64,7 @@ class SearchPage extends Component{
         }
         this.setState({
             originStation : stationCode
-        })
-        this.handleSearch();
+        },this.handleSearch)
     }
 
     handleDestinationChange = (stationCode) => {
@@ -75,20 +74,19 @@ class SearchPage extends Component{
         }
         this.setState({
             destinationStation : stationCode
-        })
-        this.handleSearch();
+        },this.handleSearch)
     }
 
     handleReturnTimeChange = (value) => {
         this.setState({
             returnTime : value
-        })
+        },this.handleSearch)
     }
 
     handleReturnDateChange = (e,date) => {
         this.setState({
             returnDate : date.toISOString().slice(0,10)
-        })
+        },this.handleSearch)
     }
 
     handleSearch = () => {
@@ -123,7 +121,7 @@ class SearchPage extends Component{
                 <Stations onChange = {this.handleOriginChange} message = "Origin Station" />
                 <Stations onChange = {this.handleDestinationChange} message = "Destination Station"/>
                 <div style = {styles.block}>
-                    <Checkbox label="Round Trip?" onCheck = {this.handleRoundTripCheck} />
+                    <Checkbox label="Round Trip?" onCheck = {this.handleRoundTripCheck} checked={this.state.roundTrip}/>
                 </div>
                 {returnDetails}
                    <Divider />

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import SearchPage from './search'
 import ResultPage from './results'
 import ReviewPage from './review'
+import ConfirmPage from './confirm_book'
 import {
   Step,
   Stepper,
@@ -59,8 +60,7 @@ class Book extends Component {
     }
   }
 
-  handleResult = (trip, returnInfo) => {
-    console.log("onclick handled")
+  handleResult = (trip, ret) => {
     let i = this.state.filledPages;
     if(!trip){
       i[1] = false
@@ -70,13 +70,12 @@ class Book extends Component {
     }
     else{
     i[1] = true
+    i[2] = true
     this.setState({
       tripInfo : trip,
-      returnInfo : returnInfo,
+      returnInfo : ret,
       filledPages : i
     })
-    console.log(trip)
-    console.log(this.state.tripInfo)
     }
 
   }
@@ -89,13 +88,25 @@ class Book extends Component {
        return <ResultPage params={this.state.searchParams} onClick={this.handleResult}/>
       case 2:
         return <ReviewPage tripInfo={this.state.tripInfo} returnInfo={this.state.returnInfo}/>;
-      default:
+      case 3:
+        return <ConfirmPage />
+        default:
           return <SearchPage onSearch={this.handleSearch}/>
       }
   }
     render() {
         const index = this.state.pageIndex;
         const contentStyle = {margin: '0 16px'};
+        let btnLabel = "Next"
+        if(index === 0){
+          btnLabel = "Search"
+        }
+        else if(index===2){
+          btnLabel = "Confirm"
+        }
+        else if(index === 3){
+          btnLabel = "Finish"
+        }
 
         return (
             <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
@@ -123,7 +134,7 @@ class Book extends Component {
                   style={{marginRight: 12}}
                 />
                 <RaisedButton
-                  label={index === 3 ? 'Finish' : 'Next'}
+                  label={btnLabel}
                   primary={true}
                   onTouchTap={this.handleNext}
                   disabled={!this.state.filledPages[index]}

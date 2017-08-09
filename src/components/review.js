@@ -18,16 +18,19 @@ class ReviewPage extends Component{
         return(
             <div>
                 <Paper>
-                    <h3>Confirm your trip from {this.props.tripinfo.origin} to 
-                        {this.props.tripinfo.destination}.
+                    <Divider />
+                    <h3>Confirm your trip from {this.props.tripInfo.origin} to 
+                        {this.props.tripInfo.destination}.
                     </h3>
                     <Divider />
-                    <p> Departure: {this.props.tripinfo.time_out} </p>
+                    <p> Departure: {this.props.tripInfo.time_out} </p>
                     <Divider />
-                    <p> Arrival: {this.props.tripinfo.arrival} </p>
+                    <p> Arrival: {this.props.tripInfo.arrival} </p>
                     <Divider />
-                    <p> Fee : {this.props.tripinfo.fare}</p>
                     {rtI}
+                    <Divider />
+                    <p> Fee : {this.props.tripInfo.fare}</p>
+                    <Divider />
                 </Paper>
             </div>
         )

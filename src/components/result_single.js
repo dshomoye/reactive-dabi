@@ -27,7 +27,8 @@ class Result extends Component {
         return (
             <div>
                 <Paper>
-                  <Table selectable={true} onRowSelection={this.props.onClick}>
+                  <Table selectable={true} 
+                  onRowSelection={this.props.onClick} >
                     <TableHeader>
                     <TableRow>
                         <TableHeaderColumn>Train Number</TableHeaderColumn>
@@ -36,9 +37,9 @@ class Result extends Component {
                         <TableHeaderColumn>Fare</TableHeaderColumn>
                     </TableRow>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody deselectOnClickaway={false}>
                     {this.getItems()}
-                    </TableBody>
+                    </TableBody >
                 </Table>
                 </Paper>
                 </div>

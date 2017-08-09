@@ -40,8 +40,6 @@ class ResultPage extends Component {
             this.setState({
                 scheduleItems : scheds,
             });
-            console.log("items stored :")
-            console.log(this.state.scheduleItems)
         }).catch (e => {
             console.log(e);
         });
@@ -72,37 +70,58 @@ class ResultPage extends Component {
         }
     }
 
+    updateInfo = () => {
+        console.log("valus checked")
+        console.log(this.state.tripInfo)
+        console.log(this.state.returnInfo)
+        console.log(this.props.params.roundTrip)
+        if(this.state.tripInfo != null){
+            if((this.props.params.roundTrip && this.state.returnInfo)|| !this.props.params.roundTrip) {
+                this.props.onClick(this.state.tripInfo,this.state.returnInfo)
+            }
+        }
+    }
+
     handleClick = (index)=> {
         let i = this.state.scheduleItems
         i.map((item)=> item.selected = false)
         if(index.length===0){
+            this.setState({
+                tripInfo : null
+            })
             this.props.onClick(false,false)
             return
         }
         i[index].selected = true;
+        let t = this.state.scheduleItems[index]
+        t.origin = this.props.params.originStation
+        t.destination = this.props.params.destinationStation
         this.setState({
-            tripInfo : this.state.scheduleItems[index],
+            tripInfo: t,
             scheduleItems : i
-        });
-        if((this.props.roundTrip && this.state.returnInfo != null) 
-            || !this.props.roundTrip){
-                let t = this.state.scheduleItems[index]
-                t.origin = this.props.params.originStation
-                t.destination = this.props.params.destinationStation
-                this.props.onClick(t,this.state.returnInfo);
-            }
+        },this.updateInfo)
+        //this.props.onClick(t,this.state.returnInfo);
     }
 
     handleReturnClick = (index) => {
-        this.setState({
-            returnInfo : this.state.returnScheduleItems[index]
-        });
-        if(this.state.tripInfo !== null){
-            let t = this.state.tripInfo
+        let i = this.state.returnScheduleItems
+        i.map((item)=> item.selected = false)
+        if(index.length===0){
+            this.setState({
+                returnInfo : null
+            })
+            this.props.onClick(false,false)
+            return
+        }
+        i[index].selected = true;
+            let t = this.state.returnScheduleItems[index]
             t.origin = this.props.params.originStation
             t.destination = this.props.params.destinationStation
-            this.props.onClick(t,this.state.returnInfo);
-        }
+            this.setState({
+                returnInfo : t,
+                returnScheduleItems : i
+            },this.updateInfo)
+            //this.props.onClick(t,this.state.returnInfo);
     }
 
     render() {
