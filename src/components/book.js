@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import SearchPage from './search'
-import ResultPage from './results'
-import ReviewPage from './review'
-import ConfirmPage from './confirm_book'
+import SearchPage from './book/search'
+import ResultPage from './book/results'
+import ReviewPage from './book/review'
+import ConfirmPage from './book/confirm_book'
 import {
   Step,
   Stepper,
